@@ -1,0 +1,18 @@
+cmake_minimum_required (VERSION 2.8)
+project (greplace)
+set (greplace_VERSION_MAJOR 1)
+set (greplace_VERSION_MINOR 0)
+
+find_package(CUDA)
+find_package(OpenCV REQUIRED)
+
+
+include_directories("${PROJECT_BINARY_DIR}")
+
+if (CUDA_VERSION)
+	cuda_add_executable(greplace main.cpp cpu.cpp gpu.cpp alpha_filter_kernel.cu person.cpp getopt.c)
+else ()
+	add_executable(greplace main.cpp cpu.cpp person.cpp getopt.c)
+endif ()
+
+target_link_libraries (greplace ${OpenCV_LIBS})
