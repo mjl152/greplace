@@ -11,9 +11,3 @@
 *.lai
 *.la
 *.a
-
-# Linux tilde files
-*.hpp~
-*.cpp~
-*.h~
-*.c~

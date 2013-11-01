@@ -27,7 +27,9 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
-#include <opencv2/gpu/gpu.hpp>
+#ifdef HAVE_CUDA
+  #include <opencv2/gpu/gpu.hpp>
+#endif
 
 #include <string>
 #include <iostream>
@@ -35,9 +37,12 @@
 #include <string>
 #include <cstdint>
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
-#include "getopt.h"
+
+#include <getopt.h>
 
 #include "person.hpp"
 #include "cpu.hpp"
@@ -149,6 +154,7 @@ int main(int argc, char ** argv) {
   auto previous_person = greplace::Person(std::string(FACES_LOAD_DIRECTORY),
                                           x_res, y_res);
   previous_person.train_model(model);
+  #ifdef HAVE_CUDA
   if (gpu) {
     auto classifier = greplace::gpu::init(HAAR_CASCADE_FRONTAL_FACE_LOCATION,
                                           cuda_device);
@@ -156,10 +162,13 @@ int main(int argc, char ** argv) {
                              threshold, INTERPERSON_PERIOD,
                              MAIN_WINDOW_TITLE);
   } else {
+  #endif
     auto classifier = greplace::init(HAAR_CASCADE_FRONTAL_FACE_LOCATION);
     greplace::main_loop(webcam, classifier, model, previous_person, threshold,
                         INTERPERSON_PERIOD, MAIN_WINDOW_TITLE);
+  #ifdef HAVE_CUDA
   }
+  #endif
 
   return EXIT_FAILURE;
 }

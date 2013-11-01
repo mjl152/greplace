@@ -1,0 +1,90 @@
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/clang++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+/usr/bin/ld: cannot find -lstdc++
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
+
+Determining if the CXX compiler works failed with the following output:
+Change Dir: /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec67395733/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec67395733.dir/build.make CMakeFiles/cmTryCompileExec67395733.dir/build
+gmake[1]: Entering directory `/home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec67395733.dir/testCXXCompiler.cxx.o
+/usr/bin/clang++     -o CMakeFiles/cmTryCompileExec67395733.dir/testCXXCompiler.cxx.o -c /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec67395733
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec67395733.dir/link.txt --verbose=1
+/usr/bin/clang++        CMakeFiles/cmTryCompileExec67395733.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec67395733 -rdynamic 
+/usr/bin/ld: cannot find -lstdc++
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+gmake[1]: *** [cmTryCompileExec67395733] Error 1
+gmake[1]: Leaving directory `/home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp'
+gmake: *** [cmTryCompileExec67395733/fast] Error 2
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/clang++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+/usr/bin/ld: cannot find -lstdc++
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
+
+Determining if the CXX compiler works failed with the following output:
+Change Dir: /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1110312017/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1110312017.dir/build.make CMakeFiles/cmTryCompileExec1110312017.dir/build
+gmake[1]: Entering directory `/home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1110312017.dir/testCXXCompiler.cxx.o
+/usr/bin/clang++     -o CMakeFiles/cmTryCompileExec1110312017.dir/testCXXCompiler.cxx.o -c /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec1110312017
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1110312017.dir/link.txt --verbose=1
+/usr/bin/clang++        CMakeFiles/cmTryCompileExec1110312017.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec1110312017 -rdynamic 
+/usr/bin/ld: cannot find -lstdc++
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+gmake[1]: *** [cmTryCompileExec1110312017] Error 1
+gmake[1]: Leaving directory `/home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp'
+gmake: *** [cmTryCompileExec1110312017/fast] Error 2
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/clang++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+/usr/bin/ld: cannot find -lstdc++
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
+
+Determining if the CXX compiler works failed with the following output:
+Change Dir: /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1505124913/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1505124913.dir/build.make CMakeFiles/cmTryCompileExec1505124913.dir/build
+gmake[1]: Entering directory `/home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1505124913.dir/testCXXCompiler.cxx.o
+/usr/bin/clang++     -o CMakeFiles/cmTryCompileExec1505124913.dir/testCXXCompiler.cxx.o -c /home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec1505124913
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1505124913.dir/link.txt --verbose=1
+/usr/bin/clang++        CMakeFiles/cmTryCompileExec1505124913.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec1505124913 -rdynamic 
+/usr/bin/ld: cannot find -lstdc++
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+gmake[1]: Leaving directory `/home/mjl152/Documents/greplace/CMakeFiles/CMakeTmp'
+gmake[1]: *** [cmTryCompileExec1505124913] Error 1
+gmake: *** [cmTryCompileExec1505124913/fast] Error 2
+
+
