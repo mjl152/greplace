@@ -10,7 +10,7 @@
 #include "person.hpp"
 
 namespace greplace {
-  void main_loop(cv::VideoCapture capture,
+  void main_loop(cv::VideoCapture & capture,
                  cv::CascadeClassifier cascade_classifier,
                  cv::Ptr<cv::FaceRecognizer> model,
                  greplace::Person previous,

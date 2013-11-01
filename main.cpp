@@ -69,7 +69,7 @@ const int THRESHOLDING_FACTOR = 16;
 const int INTERPERSON_PERIOD  = 1000;
 
 const char * FACES_LOAD_DIRECTORY = "\\starting_faces";
-const char * HAAR_CASCADE_FRONTAL_FACE_LOCATION = "C:\\Program Files (x86)\\OpenCV2.4.3\\opencv\\data\\haarcascades\\haarcascade_frontalface_default.xml";
+const char * HAAR_CASCADE_FRONTAL_FACE_LOCATION = "haarcascade_frontalface_default.xml";
 const char * MAIN_WINDOW_TITLE = "greplace";
 
 void display_help(void) {
@@ -164,6 +164,7 @@ int main(int argc, char ** argv) {
   } else {
   #endif
     auto classifier = greplace::init(HAAR_CASCADE_FRONTAL_FACE_LOCATION);
+		std::cout << "Initialized classifier";
     greplace::main_loop(webcam, classifier, model, previous_person, threshold,
                         INTERPERSON_PERIOD, MAIN_WINDOW_TITLE);
   #ifdef HAVE_CUDA
