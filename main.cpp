@@ -100,36 +100,37 @@ void display_help(void) {
   exit(EXIT_SUCCESS);
 }
 
-void get_options(const int argc, char ** argv, int & x_res, int & y_res,
+void get_options(int argc, char ** argv, int & x_res, int & y_res,
                  int & video_capture, int & cuda_device, bool & gpu,
                  bool & verbosity) {
   int optIndex[1];
-  int opt = getopt_long(argc, argv, optString, longOpts, optIndex);
-  while (opt != -1) {
-    std::string arg(optarg);
-    std::istringstream argstream(arg);
+  int opt;
+
+  while ((opt = getopt_long(argc, argv, optString, longOpts, optIndex)) != -1) {
     switch (opt) {
     case 0:
       display_help();
     case 'x':
-      argstream >> x_res;
+			x_res = atoi(optarg);
       break;
     case 'y':
-      argstream >> y_res;
+			y_res = atoi(optarg);
       break;
     case 'c':
       gpu = false;
       break;
     case 'g':
-      argstream >> cuda_device;
+			cuda_device = atoi(optarg);
       break;
     case 'v':
       verbosity = true;
       break;
     case 'w':
-      argstream >> video_capture;
+			video_capture = atoi(optarg);
       break;
     case 'h':
+      display_help();
+    default:
       display_help();
     }
   }
@@ -164,7 +165,6 @@ int main(int argc, char ** argv) {
   } else {
   #endif
     auto classifier = greplace::init(HAAR_CASCADE_FRONTAL_FACE_LOCATION);
-		std::cout << "Initialized classifier";
     greplace::main_loop(webcam, classifier, model, previous_person, threshold,
                         INTERPERSON_PERIOD, MAIN_WINDOW_TITLE);
   #ifdef HAVE_CUDA

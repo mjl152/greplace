@@ -34,6 +34,7 @@
 #include <string>
 
 #include <time.h>
+#include <signal.h>
 
 #include "cpu.hpp"
 
@@ -121,11 +122,8 @@ cv::Rect find_possible_face(cv::Mat image,
   std::vector<cv::Rect> possibles;
   cv::Mat greyscale;
   cv::Rect ret;
-  std::cout << "about to call cvtColor" << std::endl;
   cvtColor(image, greyscale, CV_BGR2GRAY);
-  std::cout << "called cvtColor" << std::endl;
   haar_cascade.detectMultiScale(greyscale, possibles);
-  //std::cout << possibles.size() << std::endl;
   if (possibles.size() == 0) {
     ret = cv::Rect(0, 0, 0, 0);
   } else {
@@ -149,9 +147,7 @@ bool greplace::rects_overlap(cv::Rect r1, cv::Rect r2) {
 
 cv::Mat to_grayscale(cv::Mat image) {
   cv::Mat greyscale;
-  std::cout << "about to call cvtColor" << std::endl;
   cvtColor(image, greyscale, CV_BGR2GRAY);
-  std::cout << "called cvtColor" << std::endl;
   return greyscale;
 }
 
@@ -167,8 +163,8 @@ cv::Mat greplace::get_new_training_face(cv::Mat image, cv::Rect face,
 
 cv::Mat update_image(cv::Rect face, cv::Mat replacement_face,
                                cv::Mat greyscale) {
-	auto faceInner = cv::Rect(face.x + face.width*1/10,
-				                    face.y + face.height*1/10, 
+	auto faceInner = cv::Rect(face.x + face.width * 1/10,
+				                    face.y + face.height * 1/10, 
 								            face.width * 4/5, face.height * 4/5);
   cv::Mat scaled_replacement_face;
   resize(replacement_face, scaled_replacement_face, face.size());
@@ -187,6 +183,11 @@ cv::Mat update_image(cv::Rect face, cv::Mat replacement_face,
   return greyscale;
 }
 
+void greplace::exit_handler(int signo) {
+	std::cout << std::endl << "greplace: User entered kill signal" << std::endl;
+	exit(EXIT_SUCCESS);
+}
+
 void greplace::main_loop(cv::VideoCapture & capture,
                          cv::CascadeClassifier cascade_classifier,
                          cv::Ptr<cv::FaceRecognizer> model,
@@ -199,13 +200,11 @@ void greplace::main_loop(cv::VideoCapture & capture,
   greplace::Person current;
   int timeSinceLastUser = 0, frmCnt = 0;
   double totalT;
+  signal(SIGINT, greplace::exit_handler);
   while (cv::waitKey(2) < 0) {
-		std::cout << "in main loop" << std::endl;
     capture >> image;
-    std::cout << image.rows << "," << image.cols << std::endl;
     auto t = static_cast<double>(cv::getTickCount());
     greyscale = to_grayscale(image);
-    std::cout << "Main loop to_grayscale complete" << std::endl;
     previous_face = face;
     face = find_possible_face(image, cascade_classifier, THRESHOLD);
     if (face.area() != 0 && rects_overlap(face, previous_face)) {
@@ -235,6 +234,6 @@ void greplace::main_loop(cv::VideoCapture & capture,
     frmCnt++;
     std::cout << "fps: " << 1.0/(totalT/(double)frmCnt) << std::endl;
   }
-  std::cout << "greplace: error in main loop. Ending program execution." << std::endl;
+  std::cout << "greplace: Unexpected exit." << std::endl;
   exit(EXIT_FAILURE);
 }

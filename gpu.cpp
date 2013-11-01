@@ -13,6 +13,7 @@
 #include "alpha_filter_kernel.h"
 
 #include <time.h>
+#include <signal.h>
 
 #include "person.hpp"
 #include "cpu.hpp"
@@ -133,6 +134,7 @@ void greplace::gpu::main_loop(cv::VideoCapture capture,
 	long frmCnt = 0;
 	double totalT = 0.0;
 	double t;
+  signal(SIGINT, greplace::exit_handler);
 	while (cv::waitKey(2) < 0) {
 		capture >> image;
 		imageGpu = cv::gpu::GpuMat(image);

@@ -29,6 +29,7 @@ namespace greplace {
 
   cv::Rect intersection(cv::Rect r1, cv::Rect r2);
   bool rects_overlap(cv::Rect r1, cv::Rect r2);
+  void exit_handler(int signo);
 }
 
 
