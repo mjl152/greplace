@@ -6,7 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/home/mjl152/Documents/stuff/greplace/cpu.cpp
+/home/mjl152/Documents/stuff/greplace/cmake_config.h
+
+/home/mjl152/Documents/stuff/greplace/cpu.hpp
+opencv2/core/core.hpp
+-
+opencv2/contrib/contrib.hpp
+-
+opencv2/imgproc/imgproc.hpp
+-
+opencv2/highgui/highgui.hpp
+-
+opencv2/objdetect/objdetect.hpp
+-
+person.hpp
+/home/mjl152/Documents/stuff/greplace/person.hpp
+
+/home/mjl152/Documents/stuff/greplace/greplace-psearch-cpu.cpp
 opencv2/core/core.hpp
 -
 opencv2/contrib/contrib.hpp
@@ -25,14 +41,28 @@ sstream
 -
 string
 -
+stdio.h
+-
+stdlib.h
+-
 time.h
 -
-signal.h
+dirent.h
 -
+getopt.h
+-
+math.h
+-
+person.hpp
+/home/mjl152/Documents/stuff/greplace/person.hpp
+greplace-psearch-cpu.hpp
+/home/mjl152/Documents/stuff/greplace/greplace-psearch-cpu.hpp
 cpu.hpp
 /home/mjl152/Documents/stuff/greplace/cpu.hpp
+cmake_config.h
+/home/mjl152/Documents/stuff/greplace/cmake_config.h
 
-/home/mjl152/Documents/stuff/greplace/cpu.hpp
+/home/mjl152/Documents/stuff/greplace/greplace-psearch-cpu.hpp
 opencv2/core/core.hpp
 -
 opencv2/contrib/contrib.hpp
@@ -43,8 +73,12 @@ opencv2/highgui/highgui.hpp
 -
 opencv2/objdetect/objdetect.hpp
 -
-person.hpp
-/home/mjl152/Documents/stuff/greplace/person.hpp
+string
+-
+iostream
+-
+sstream
+-
 
 /home/mjl152/Documents/stuff/greplace/person.hpp
 string

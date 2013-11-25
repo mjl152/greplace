@@ -35,7 +35,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <cstdint>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,7 +51,7 @@
   #include "gpu.hpp"
 #endif
 
-static const char *optString = "x:y:w:g:chv";
+static const char *optString = "s:e";
 
 static const struct option longOpts[] = {
   {"x_res",       required_argument, NULL, 'x'},
@@ -68,7 +67,7 @@ static const struct option longOpts[] = {
 const int THRESHOLDING_FACTOR = 16;
 const int INTERPERSON_PERIOD  = 1000;
 
-const char * FACES_LOAD_DIRECTORY = "\\starting_faces";
+const char * FACES_LOAD_DIRECTORY = "\\parameter_faces";
 const char * HAAR_CASCADE_FRONTAL_FACE_LOCATION = "haarcascade_frontalface_default.xml";
 const char * MAIN_WINDOW_TITLE = "greplace";
 
@@ -151,25 +150,13 @@ int main(int argc, char ** argv) {
 	webcam.set(CV_CAP_PROP_FRAME_WIDTH,  x_res);
 	webcam.set(CV_CAP_PROP_FRAME_HEIGHT, y_res);
   cv::namedWindow(MAIN_WINDOW_TITLE, CV_WINDOW_AUTOSIZE );
-  auto model = cv::createFisherFaceRecognizer();
-  auto previous_person = greplace::Person(std::string(FACES_LOAD_DIRECTORY),
+  cv::Ptr<cv::FaceRecognizer> model = cv::createFisherFaceRecognizer();
+  greplace::Person previous_person = greplace::Person(std::string(FACES_LOAD_DIRECTORY),
                                           x_res, y_res);
   previous_person.train_model(model);
-  #ifdef HAVE_CUDA
-  if (gpu) {
-    auto classifier = greplace::gpu::init(HAAR_CASCADE_FRONTAL_FACE_LOCATION,
-                                          cuda_device);
-    greplace::gpu::main_loop(webcam, classifier, model, previous_person,
-                             threshold, INTERPERSON_PERIOD,
-                             MAIN_WINDOW_TITLE);
-  } else {
-  #endif
-    auto classifier = greplace::init(HAAR_CASCADE_FRONTAL_FACE_LOCATION);
+    cv::CascadeClassifier classifier = greplace::init(HAAR_CASCADE_FRONTAL_FACE_LOCATION);
     greplace::main_loop(webcam, classifier, model, previous_person, threshold,
                         INTERPERSON_PERIOD, MAIN_WINDOW_TITLE);
-  #ifdef HAVE_CUDA
-  }
-  #endif
 
   return EXIT_FAILURE;
 }

@@ -102,24 +102,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named greplace
+# Target rules for targets named greplace-psearch
 
 # Build rule for target.
-greplace: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 greplace
-.PHONY : greplace
+greplace-psearch: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 greplace-psearch
+.PHONY : greplace-psearch
 
 # fast build rule for target.
-greplace/fast:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/build
-.PHONY : greplace/fast
+greplace-psearch/fast:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/build
+.PHONY : greplace-psearch/fast
 
 cpu.o: cpu.cpp.o
 .PHONY : cpu.o
 
 # target to build an object file
 cpu.cpp.o:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/cpu.cpp.o
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/cpu.cpp.o
 .PHONY : cpu.cpp.o
 
 cpu.i: cpu.cpp.i
@@ -127,7 +127,7 @@ cpu.i: cpu.cpp.i
 
 # target to preprocess a source file
 cpu.cpp.i:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/cpu.cpp.i
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/cpu.cpp.i
 .PHONY : cpu.cpp.i
 
 cpu.s: cpu.cpp.s
@@ -135,39 +135,63 @@ cpu.s: cpu.cpp.s
 
 # target to generate assembly for a file
 cpu.cpp.s:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/cpu.cpp.s
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/cpu.cpp.s
 .PHONY : cpu.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+greplace-psearch-cpu.o: greplace-psearch-cpu.cpp.o
+.PHONY : greplace-psearch-cpu.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/main.cpp.o
-.PHONY : main.cpp.o
+greplace-psearch-cpu.cpp.o:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/greplace-psearch-cpu.cpp.o
+.PHONY : greplace-psearch-cpu.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+greplace-psearch-cpu.i: greplace-psearch-cpu.cpp.i
+.PHONY : greplace-psearch-cpu.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/main.cpp.i
-.PHONY : main.cpp.i
+greplace-psearch-cpu.cpp.i:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/greplace-psearch-cpu.cpp.i
+.PHONY : greplace-psearch-cpu.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+greplace-psearch-cpu.s: greplace-psearch-cpu.cpp.s
+.PHONY : greplace-psearch-cpu.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/main.cpp.s
-.PHONY : main.cpp.s
+greplace-psearch-cpu.cpp.s:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/greplace-psearch-cpu.cpp.s
+.PHONY : greplace-psearch-cpu.cpp.s
+
+greplace-psearch.o: greplace-psearch.cpp.o
+.PHONY : greplace-psearch.o
+
+# target to build an object file
+greplace-psearch.cpp.o:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/greplace-psearch.cpp.o
+.PHONY : greplace-psearch.cpp.o
+
+greplace-psearch.i: greplace-psearch.cpp.i
+.PHONY : greplace-psearch.i
+
+# target to preprocess a source file
+greplace-psearch.cpp.i:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/greplace-psearch.cpp.i
+.PHONY : greplace-psearch.cpp.i
+
+greplace-psearch.s: greplace-psearch.cpp.s
+.PHONY : greplace-psearch.s
+
+# target to generate assembly for a file
+greplace-psearch.cpp.s:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/greplace-psearch.cpp.s
+.PHONY : greplace-psearch.cpp.s
 
 person.o: person.cpp.o
 .PHONY : person.o
 
 # target to build an object file
 person.cpp.o:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/person.cpp.o
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/person.cpp.o
 .PHONY : person.cpp.o
 
 person.i: person.cpp.i
@@ -175,7 +199,7 @@ person.i: person.cpp.i
 
 # target to preprocess a source file
 person.cpp.i:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/person.cpp.i
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/person.cpp.i
 .PHONY : person.cpp.i
 
 person.s: person.cpp.s
@@ -183,7 +207,7 @@ person.s: person.cpp.s
 
 # target to generate assembly for a file
 person.cpp.s:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/person.cpp.s
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/person.cpp.s
 .PHONY : person.cpp.s
 
 # Help Target
@@ -193,14 +217,17 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... greplace"
+	@echo "... greplace-psearch"
 	@echo "... rebuild_cache"
 	@echo "... cpu.o"
 	@echo "... cpu.i"
 	@echo "... cpu.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... greplace-psearch-cpu.o"
+	@echo "... greplace-psearch-cpu.i"
+	@echo "... greplace-psearch-cpu.s"
+	@echo "... greplace-psearch.o"
+	@echo "... greplace-psearch.i"
+	@echo "... greplace-psearch.s"
 	@echo "... person.o"
 	@echo "... person.i"
 	@echo "... person.s"

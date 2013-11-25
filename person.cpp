@@ -20,16 +20,15 @@ greplace::Person::Person(std::string load_directory, int x_res, int y_res) {
 cv::Mat greplace::Person::prediction(cv::Mat image, cv::Rect face, cv::Ptr<cv::FaceRecognizer> model) {
   cv::Mat greyscale;
   cvtColor(image, greyscale, CV_BGR2GRAY);
-  auto faceMat = greyscale(face);
-  auto replacement = faces[0].clone();
+  cv::Mat faceMat = greyscale(face);
+  cv::Mat replacement = faces[0].clone();
   resize(faceMat, replacement, replacement.size());
-  auto result = model->predict(replacement);
+  int result = model->predict(replacement);
   return faces[result];
 }
 
 void greplace::Person::load_training_faces(std::string load_directory, int x_res, int y_res) {
 	int i;
-  std::cout << load_directory << std::endl;
 	for (i = 1; i <= 10; i ++) {
 		std::ostringstream out;
     out << i << ".pgm";

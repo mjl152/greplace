@@ -22,42 +22,32 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef _GREPLACE_GPU_HPP
-#define _GREPLACE_GPU_HPP
+#ifndef _GREPLACE_PSEARCH_CPU_HPP
+#define _GREPLACE_PSEARCH_CPU_HPP
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/contrib/contrib.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
-#include <opencv2/gpu/gpu.hpp>
 
-#include "person.hpp"
+#include <string>
+#include <iostream>
+#include <sstream>
 
 namespace greplace {
-  namespace gpu {
-    void main_loop(cv::VideoCapture capture,
-                   cv::gpu::CascadeClassifier_GPU cascade_classifier,
-                   cv::Ptr<cv::FaceRecognizer> model,
-                   greplace::Person previous,
-                   const int THRESHOLD,
-                   const int INTERPERSON_PERIOD,
-                   const char * MAIN_WINDOW_TITLE);
 
-    
-    cv::gpu::CascadeClassifier_GPU init(const char * CLASSIFIER_CONFIG,
-                                        int cuda_device);
-    cv::gpu::GpuMat find_face(cv::gpu::GpuMat image,
-                      cv::gpu::CascadeClassifier_GPU cascade_classifier,
-                       int THRESHOLD);
-    cv::gpu::GpuMat blend(cv::gpu::GpuMat face1,
-                          cv::gpu::GpuMat face2, double r0, double rf);
-    cv::Rect get_largest_rect(cv::Rect * rects, int detections);
-    cv::gpu::GpuMat to_grayscale(cv::gpu::GpuMat image);
+	double mean(std::vector<double> set);
 
-  }
+	double hist_correlation(cv::Mat H1, cv::Mat H2);
+
+	cv::Mat hist(cv::Mat const & image);
+
+	double find_statistic(std::vector<cv::Mat> images, std::vector<cv::Mat> hists, double r0,
+		                    double rf, cv::CascadeClassifier & classifier, double &
+                        standard_deviation);
+
+  std::vector<cv::Mat> hists(std::vector<cv::Mat> & faces);
+
 }
-
-
-
 #endif

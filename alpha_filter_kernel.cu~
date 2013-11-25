@@ -69,7 +69,7 @@ void alphaKernelCaller(cv::gpu::PtrStepSz<uchar> & x, double r0, double rf)
    cudaDeviceSynchronize();
 } 
 
-extern "C" void reverseAlphaKernelCaller(cv::gpu::PtrStepSz<uchar> & x,
+extern "C" void reverseAlphaFilterKernel(cv::gpu::PtrStepSz<uchar> & x,
                                          double r0, double rf) {
 	dim3 dimBlock(16, 16);
 	dim3 dimGrid((x.cols + (dimBlock.x - 1)) / dimBlock.x, (x.rows + (dimBlock.y - 1)) / dimBlock.y);

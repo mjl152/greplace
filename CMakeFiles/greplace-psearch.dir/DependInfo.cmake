@@ -4,9 +4,10 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/mjl152/Documents/stuff/greplace/cpu.cpp" "/home/mjl152/Documents/stuff/greplace/CMakeFiles/greplace.dir/cpu.cpp.o"
-  "/home/mjl152/Documents/stuff/greplace/main.cpp" "/home/mjl152/Documents/stuff/greplace/CMakeFiles/greplace.dir/main.cpp.o"
-  "/home/mjl152/Documents/stuff/greplace/person.cpp" "/home/mjl152/Documents/stuff/greplace/CMakeFiles/greplace.dir/person.cpp.o"
+  "/home/mjl152/Documents/stuff/greplace/cpu.cpp" "/home/mjl152/Documents/stuff/greplace/CMakeFiles/greplace-psearch.dir/cpu.cpp.o"
+  "/home/mjl152/Documents/stuff/greplace/greplace-psearch-cpu.cpp" "/home/mjl152/Documents/stuff/greplace/CMakeFiles/greplace-psearch.dir/greplace-psearch-cpu.cpp.o"
+  "/home/mjl152/Documents/stuff/greplace/greplace-psearch.cpp" "/home/mjl152/Documents/stuff/greplace/CMakeFiles/greplace-psearch.dir/greplace-psearch.cpp.o"
+  "/home/mjl152/Documents/stuff/greplace/person.cpp" "/home/mjl152/Documents/stuff/greplace/CMakeFiles/greplace-psearch.dir/person.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

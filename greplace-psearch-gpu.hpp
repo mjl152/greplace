@@ -22,8 +22,8 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef _GREPLACE_GPU_HPP
-#define _GREPLACE_GPU_HPP
+#ifndef _GREPLACE_PSEARCH_GPU_HPP
+#define _GREPLACE_PSEARCH_GPU_HPP
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/contrib/contrib.hpp>
@@ -32,32 +32,14 @@
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/gpu/gpu.hpp>
 
-#include "person.hpp"
+#include <string>
+#include <iostream>
+#include <sstream>
 
 namespace greplace {
-  namespace gpu {
-    void main_loop(cv::VideoCapture capture,
-                   cv::gpu::CascadeClassifier_GPU cascade_classifier,
-                   cv::Ptr<cv::FaceRecognizer> model,
-                   greplace::Person previous,
-                   const int THRESHOLD,
-                   const int INTERPERSON_PERIOD,
-                   const char * MAIN_WINDOW_TITLE);
-
-    
-    cv::gpu::CascadeClassifier_GPU init(const char * CLASSIFIER_CONFIG,
-                                        int cuda_device);
-    cv::gpu::GpuMat find_face(cv::gpu::GpuMat image,
-                      cv::gpu::CascadeClassifier_GPU cascade_classifier,
-                       int THRESHOLD);
-    cv::gpu::GpuMat blend(cv::gpu::GpuMat face1,
-                          cv::gpu::GpuMat face2, double r0, double rf);
-    cv::Rect get_largest_rect(cv::Rect * rects, int detections);
-    cv::gpu::GpuMat to_grayscale(cv::gpu::GpuMat image);
-
+	namespace gpu {
+		double find_statistic(std::vector<std::string> images, double r0,
+                          double rf, cv::gpu::CascadeClassifier_GPU & classifier);
   }
 }
-
-
-
 #endif

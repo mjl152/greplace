@@ -56,38 +56,38 @@ CMAKE_SOURCE_DIR = /home/mjl152/Documents/stuff/greplace
 CMAKE_BINARY_DIR = /home/mjl152/Documents/stuff/greplace
 
 #=============================================================================
-# Target rules for target CMakeFiles/greplace.dir
+# Target rules for target CMakeFiles/greplace-psearch.dir
 
 # All Build rule for target.
-CMakeFiles/greplace.dir/all:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/depend
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/mjl152/Documents/stuff/greplace/CMakeFiles  1 2 3
-	@echo "Built target greplace"
-.PHONY : CMakeFiles/greplace.dir/all
+CMakeFiles/greplace-psearch.dir/all:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/depend
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/mjl152/Documents/stuff/greplace/CMakeFiles  1 2 3 4
+	@echo "Built target greplace-psearch"
+.PHONY : CMakeFiles/greplace-psearch.dir/all
 
 # Include target in all.
-all: CMakeFiles/greplace.dir/all
+all: CMakeFiles/greplace-psearch.dir/all
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/greplace.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mjl152/Documents/stuff/greplace/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/greplace.dir/all
+CMakeFiles/greplace-psearch.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mjl152/Documents/stuff/greplace/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/greplace-psearch.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/mjl152/Documents/stuff/greplace/CMakeFiles 0
-.PHONY : CMakeFiles/greplace.dir/rule
+.PHONY : CMakeFiles/greplace-psearch.dir/rule
 
 # Convenience name for target.
-greplace: CMakeFiles/greplace.dir/rule
-.PHONY : greplace
+greplace-psearch: CMakeFiles/greplace-psearch.dir/rule
+.PHONY : greplace-psearch
 
 # clean rule for target.
-CMakeFiles/greplace.dir/clean:
-	$(MAKE) -f CMakeFiles/greplace.dir/build.make CMakeFiles/greplace.dir/clean
-.PHONY : CMakeFiles/greplace.dir/clean
+CMakeFiles/greplace-psearch.dir/clean:
+	$(MAKE) -f CMakeFiles/greplace-psearch.dir/build.make CMakeFiles/greplace-psearch.dir/clean
+.PHONY : CMakeFiles/greplace-psearch.dir/clean
 
 # clean rule for target.
-clean: CMakeFiles/greplace.dir/clean
+clean: CMakeFiles/greplace-psearch.dir/clean
 .PHONY : clean
 
 #=============================================================================

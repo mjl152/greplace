@@ -11,8 +11,8 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/2.8.12/CMakeCXXCompiler.cmake"
   "CMakeFiles/2.8.12/CMakeSystem.cmake"
   "CMakeLists.txt"
-  "/usr/lib64/cmake/OpenCV/OpenCVConfig-version.cmake"
-  "/usr/lib64/cmake/OpenCV/OpenCVConfig.cmake"
+  "/usr/local/share/OpenCV/OpenCVConfig-version.cmake"
+  "/usr/local/share/OpenCV/OpenCVConfig.cmake"
   "/usr/share/cmake/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
@@ -45,5 +45,5 @@ SET(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 SET(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/greplace.dir/DependInfo.cmake"
+  "CMakeFiles/greplace-psearch.dir/DependInfo.cmake"
   )

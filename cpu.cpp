@@ -1,25 +1,26 @@
 /* 
-  The MIT License (MIT)
-
-  Copyright (c) 2013 Michael Lancaster <mjl152@uclive.ac.nz>
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy of
-  this software and associated documentation files (the "Software"), to deal in
-  the Software without restriction, including without limitation the rights to
-  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-  the Software, and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2013 Michael Lancaster <mjl152@uclive.ac.nz>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to 
+ * deal in the Software without restriction, including without limitation the 
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is 
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ */
 
 
 #include <opencv2/core/core.hpp>
@@ -32,6 +33,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <exception>
 
 #include <time.h>
 #include <signal.h>
@@ -44,7 +46,7 @@ cv::CascadeClassifier greplace::init(const char * CLASSIFIER_CONFIG) {
 }
 
 cv::Rect greplace::get_largest_rect(cv::Vector<cv::Rect> rects) {
-	auto largest_rect = rects[0];
+	cv::Rect largest_rect = rects[0];
 	for (size_t i = 1; i < rects.size(); i ++) {
 		if (rects[i].area() > largest_rect.area()) {
 			largest_rect = rects[i];
@@ -60,8 +62,9 @@ double greplace::dist(int x, int y, int rows, int columns) {
                       static_cast<double>(columns) / 2), 2));
 }
 
-void perform_circular_alpha_filter(cv::Mat &input) {
+void perform_circular_alpha_filter(cv::Mat &input, double r0, double rf) {
 	double max_dist = greplace::dist(0, 0, input.rows, input.cols);
+  double mf = 255 / (rf - r0);
 	for (int row = 0; row < input.rows; row ++ ) {
 		uchar *p = input.ptr(row);
 		for (int col = 0; col < input.cols; col ++) {
@@ -71,9 +74,35 @@ void perform_circular_alpha_filter(cv::Mat &input) {
 			}
 			double ratio = greplace::dist(row, col, input.rows, input.cols) / max_dist;
 			int alpha = 255;
-			if (ratio > 0.8) {
-				alpha = static_cast<int>(255 - (ratio-0.8)*1270);
+      if (ratio >= r0) {
+        alpha = 255 - mf*(ratio - r0);
+      }
+      if (ratio >= rf) {
+        alpha = 0;
+      }
+			p[offset + 3] = alpha;
+		}
+	}
+}
+
+void perform_reverse_circular_alpha_filter(cv::Mat &input, double r0, double rf) {
+	double max_dist = greplace::dist(0, 0, input.rows, input.cols);
+  double mf = 255 / (rf - r0);
+	for (int row = 0; row < input.rows; row ++ ) {
+		uchar *p = input.ptr(row);
+		for (int col = 0; col < input.cols; col ++) {
+			int offset = 4*(col-1);
+			if (offset < 0) {
+				offset = 0;
 			}
+			double ratio = greplace::dist(row, col, input.rows, input.cols) / max_dist;
+			int alpha = 0;
+      if (ratio >= r0) {
+        alpha = mf*(ratio - r0);
+      }
+      if (ratio >= rf) {
+        alpha = 255;
+      }
 			p[offset + 3] = alpha;
 		}
 	}
@@ -136,8 +165,8 @@ cv::Rect find_possible_face(cv::Mat image,
 }
 
 bool greplace::rects_overlap(cv::Rect r1, cv::Rect r2) {
-  auto inter = intersection(r1, r2);
-  auto sum   = r1 | r2;
+  cv::Rect inter = intersection(r1, r2);
+  cv::Rect sum   = r1 | r2;
   if ((static_cast<double>(inter.area()) /
       static_cast<double>(sum.area())) > 0.5) {
     return true;
@@ -151,10 +180,14 @@ cv::Mat to_grayscale(cv::Mat image) {
   return greyscale;
 }
 
+cv::Mat greplace::to_grayscale(cv::Mat image) {
+  return to_grayscale(image);
+}
+
 cv::Mat greplace::get_new_training_face(cv::Mat image, cv::Rect face,
                                         greplace::Person person) {
 	cv::Mat new_training = to_grayscale(image(face));
-  auto f = person.face();
+  cv::Mat f = person.face();
 	cv::Mat new_training_resized = f.clone();
 	resize(new_training, new_training_resized, f.size());
   return new_training_resized;
@@ -162,22 +195,22 @@ cv::Mat greplace::get_new_training_face(cv::Mat image, cv::Rect face,
 
 
 cv::Mat update_image(cv::Rect face, cv::Mat replacement_face,
-                               cv::Mat greyscale) {
-	auto faceInner = cv::Rect(face.x + face.width * 1/10,
+                     cv::Mat greyscale, double r0, double rf) {
+	cv::Rect faceInner(face.x + face.width * 1/10,
 				                    face.y + face.height * 1/10, 
 								            face.width * 4/5, face.height * 4/5);
   cv::Mat scaled_replacement_face;
   resize(replacement_face, scaled_replacement_face, face.size());
-	auto replacementInner = cv::Rect(scaled_replacement_face.cols / 10,
+	cv::Rect replacementInner (scaled_replacement_face.cols / 10,
                                   scaled_replacement_face.rows / 10,
 				                          scaled_replacement_face.cols * 4 / 5,
                                   scaled_replacement_face.rows * 4 / 5);
-  auto replacementInnerMat = scaled_replacement_face(replacementInner);
+  cv::Mat replacementInnerMat = scaled_replacement_face(replacementInner);
 	cv::Mat scaledReplacementFacebgra, destROIbgra, alphaBlended;
-	auto destROI = greyscale(faceInner);
+	cv::Mat destROI = greyscale(faceInner);
 	cvtColor(destROI, destROIbgra, CV_GRAY2BGRA);
 	cvtColor(replacementInnerMat, scaledReplacementFacebgra, CV_GRAY2BGRA);
-	perform_circular_alpha_filter(scaledReplacementFacebgra);
+	perform_circular_alpha_filter(scaledReplacementFacebgra, r0, rf);
 	alpha_compose(scaledReplacementFacebgra, destROIbgra, alphaBlended);
 	cvtColor(alphaBlended, destROI, CV_RGBA2GRAY);
   return greyscale;
@@ -186,6 +219,34 @@ cv::Mat update_image(cv::Rect face, cv::Mat replacement_face,
 void greplace::exit_handler(int signo) {
 	std::cout << std::endl << "greplace: User entered kill signal" << std::endl;
 	exit(EXIT_SUCCESS);
+}
+
+cv::Mat greplace::find_face(cv::Mat image,
+                            cv::CascadeClassifier classifier,
+                            int THRESHOLDING_FACTOR) {
+  std::vector<cv::Rect> possibles;
+  cv::Rect ret;
+  classifier.detectMultiScale(image, possibles);
+  if (possibles.size() == 0) {
+    throw 0;
+  } else {
+    ret = greplace::get_largest_rect(possibles);
+    if (ret.area() <= (image.rows * image.cols / THRESHOLDING_FACTOR)) {
+      throw 0;
+    }
+  }
+  return image(ret);
+}
+
+cv::Mat greplace::blend(cv::Mat face1, cv::Mat face2, double r0, double rf) {
+  cv::Mat face1bgra, face2bgra, blended, final;
+	cvtColor(face1, face1bgra, CV_GRAY2BGRA);
+	cvtColor(face2, face2bgra, CV_GRAY2BGRA);
+	perform_circular_alpha_filter(face1bgra, r0, rf);
+  perform_reverse_circular_alpha_filter(face2bgra, r0, rf);
+	alpha_compose(face1bgra, face2bgra, blended);
+	cvtColor(blended, final, CV_RGBA2GRAY);
+  return final;
 }
 
 void greplace::main_loop(cv::VideoCapture & capture,
@@ -201,9 +262,10 @@ void greplace::main_loop(cv::VideoCapture & capture,
   int timeSinceLastUser = 0, frmCnt = 0;
   double totalT;
   signal(SIGINT, greplace::exit_handler);
+  capture.grab();
   while (cv::waitKey(2) < 0) {
     capture >> image;
-    auto t = static_cast<double>(cv::getTickCount());
+    double t = static_cast<double>(cv::getTickCount());
     greyscale = to_grayscale(image);
     previous_face = face;
     face = find_possible_face(image, cascade_classifier, THRESHOLD);
@@ -216,8 +278,8 @@ void greplace::main_loop(cv::VideoCapture & capture,
         previous.train_model(model);
 		  }
       /* Get the replacement face */
-      auto replacement = previous.prediction(image, face, model);
-      greyscale = update_image(face, replacement, greyscale);
+      cv::Mat replacement = previous.prediction(image, face, model);
+      greyscale = update_image(face, replacement, greyscale, 0.7, 0.9);
       timeSinceLastUser = 0;
     }   
     if (face.area() != 0) {
